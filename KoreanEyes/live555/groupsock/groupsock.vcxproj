@@ -18,10 +18,30 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GroupEId.cpp" />
+    <ClCompile Include="Groupsock.cpp" />
+    <ClCompile Include="GroupsockHelper.cpp" />
+    <ClCompile Include="inet.c" />
+    <ClCompile Include="IOHandlers.cpp" />
+    <ClCompile Include="NetAddress.cpp" />
+    <ClCompile Include="NetInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\GroupEId.hh" />
+    <ClInclude Include="include\Groupsock.hh" />
+    <ClInclude Include="include\GroupsockHelper.hh" />
+    <ClInclude Include="include\groupsock_version.hh" />
+    <ClInclude Include="include\IOHandlers.hh" />
+    <ClInclude Include="include\NetAddress.hh" />
+    <ClInclude Include="include\NetCommon.h" />
+    <ClInclude Include="include\NetInterface.hh" />
+    <ClInclude Include="include\TunnelEncaps.hh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CDC23B6E-3897-47ED-B6CD-C8A6C749B3E2}</ProjectGuid>
     <RootNamespace>groupsock</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -68,13 +88,19 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -83,6 +109,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,6 +120,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -107,31 +135,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\live\groupsock\GroupEId.cpp" />
-    <ClCompile Include="..\..\..\live\groupsock\Groupsock.cpp" />
-    <ClCompile Include="..\..\..\live\groupsock\GroupsockHelper.cpp" />
-    <ClCompile Include="..\..\..\live\groupsock\inet.c" />
-    <ClCompile Include="..\..\..\live\groupsock\IOHandlers.cpp" />
-    <ClCompile Include="..\..\..\live\groupsock\NetAddress.cpp" />
-    <ClCompile Include="..\..\..\live\groupsock\NetInterface.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\live\groupsock\include\GroupEId.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\Groupsock.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\GroupsockHelper.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\groupsock_version.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\IOHandlers.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\NetAddress.hh" />
-    <ClInclude Include="..\..\..\live\groupsock\include\NetCommon.h" />
-    <ClInclude Include="..\..\..\live\groupsock\include\NetInterface.hh" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BasicHashTable.cpp" />
+    <ClCompile Include="BasicTaskScheduler.cpp" />
+    <ClCompile Include="BasicTaskScheduler0.cpp" />
+    <ClCompile Include="BasicUsageEnvironment.cpp" />
+    <ClCompile Include="BasicUsageEnvironment0.cpp" />
+    <ClCompile Include="DelayQueue.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\BasicHashTable.hh" />
+    <ClInclude Include="include\BasicUsageEnvironment.hh" />
+    <ClInclude Include="include\BasicUsageEnvironment0.hh" />
+    <ClInclude Include="include\BasicUsageEnvironment_version.hh" />
+    <ClInclude Include="include\DelayQueue.hh" />
+    <ClInclude Include="include\HandlerSet.hh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1A77249F-9A9B-4A91-A1CA-D2089866240F}</ProjectGuid>
     <RootNamespace>BasicUsageEnvironment</RootNamespace>
@@ -68,7 +84,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -113,22 +134,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\BasicHashTable.cpp" />
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\BasicTaskScheduler.cpp" />
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\BasicTaskScheduler0.cpp" />
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\BasicUsageEnvironment.cpp" />
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\BasicUsageEnvironment0.cpp" />
-    <ClCompile Include="..\..\..\live\BasicUsageEnvironment\DelayQueue.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\BasicHashTable.hh" />
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\BasicUsageEnvironment.hh" />
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\BasicUsageEnvironment0.hh" />
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\BasicUsageEnvironment_version.hh" />
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\DelayQueue.hh" />
-    <ClInclude Include="..\..\..\live\BasicUsageEnvironment\include\HandlerSet.hh" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

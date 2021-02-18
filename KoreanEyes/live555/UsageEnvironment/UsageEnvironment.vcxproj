@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HashTable.cpp" />
+    <ClCompile Include="strDup.cpp" />
+    <ClCompile Include="UsageEnvironment.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="include\Boolean.hh" />
     <ClInclude Include="include\HashTable.hh" />
     <ClInclude Include="include\strDup.hh" />
     <ClInclude Include="include\UsageEnvironment.hh" />
     <ClInclude Include="include\UsageEnvironment_version.hh" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="HashTable.cpp" />
-    <ClCompile Include="strDup.cpp" />
-    <ClCompile Include="UsageEnvironment.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3EB05C69-27AF-4B07-9484-513DA6729F6F}</ProjectGuid>
@@ -80,7 +80,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
