@@ -18,33 +18,44 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="showAudioInputPorts.cpp" />
+    <ClCompile Include="WindowsAudioInputDevice_common.cpp" />
+    <ClCompile Include="WindowsAudioInputDevice_mixer.cpp" />
+    <ClCompile Include="WindowsAudioInputDevice_noMixer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowsAudioInputDevice_common.hh" />
+    <ClInclude Include="WindowsAudioInputDevice_mixer.hh" />
+    <ClInclude Include="WindowsAudioInputDevice_noMixer.hh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D72005D8-3BB8-445D-B301-D33807AA4A88}</ProjectGuid>
-    <RootNamespace>mediaServer</RootNamespace>
+    <ProjectGuid>{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0}</ProjectGuid>
+    <RootNamespace>WindowsAudioInputDevice</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -81,28 +92,18 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\WindowsAudioInputDevice</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\WindowsAudioInputDevice</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,15 +112,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\WindowsAudioInputDevice</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,25 +127,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\WindowsAudioInputDevice</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\mediaServer\DynamicRTSPServer.hh" />
-    <ClInclude Include="..\..\mediaServer\version.hh" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\mediaServer\DynamicRTSPServer.cpp" />
-    <ClCompile Include="..\..\mediaServer\live555MediaServer.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -365,8 +365,11 @@
     <ClCompile Include="WAVAudioFileServerMediaSubsession.cpp" />
     <ClCompile Include="WAVAudioFileSource.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ProxyServerMediaSession.cpp.orig" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{EF2CA065-1355-4628-87EB-CDFE859279A6}</ProjectGuid>
+    <ProjectGuid>{701DEB05-0226-4E70-AE87-951DC0818CB0}</ProjectGuid>
     <RootNamespace>liveMedia</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -417,9 +420,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -427,7 +432,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)groupsock\include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BasicUsageEnvironment\include;..\UsageEnvironment\include;..\groupsock\include;..\liveMedia\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -436,7 +441,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)groupsock\include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BasicUsageEnvironment\include;..\UsageEnvironment\include;..\groupsock\include;..\liveMedia\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -447,7 +452,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)groupsock\include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BasicUsageEnvironment\include;..\UsageEnvironment\include;..\groupsock\include;..\liveMedia\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -462,7 +467,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)groupsock\include;$(SolutionDir)UsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BasicUsageEnvironment\include;..\UsageEnvironment\include;..\groupsock\include;..\liveMedia\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

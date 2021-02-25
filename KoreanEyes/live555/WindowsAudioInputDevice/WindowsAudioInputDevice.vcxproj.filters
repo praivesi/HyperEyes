@@ -15,43 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicTaskScheduler.cpp">
+    <ClCompile Include="WindowsAudioInputDevice_noMixer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicTaskScheduler0.cpp">
+    <ClCompile Include="showAudioInputPorts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicUsageEnvironment.cpp">
+    <ClCompile Include="WindowsAudioInputDevice_common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicUsageEnvironment0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DelayQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicHashTable.cpp">
+    <ClCompile Include="WindowsAudioInputDevice_mixer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\BasicHashTable.hh">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="WindowsAudioInputDevice_noMixer.hh">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\BasicUsageEnvironment.hh">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="WindowsAudioInputDevice_common.hh">
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\BasicUsageEnvironment_version.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BasicUsageEnvironment0.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DelayQueue.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\HandlerSet.hh">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="WindowsAudioInputDevice_mixer.hh">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

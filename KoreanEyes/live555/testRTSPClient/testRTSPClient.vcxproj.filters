@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\proxyServer\live555ProxyServer.cpp">
+    <ClCompile Include="testRTSPClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

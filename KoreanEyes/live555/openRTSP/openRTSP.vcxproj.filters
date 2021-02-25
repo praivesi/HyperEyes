@@ -15,8 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\proxyServer\live555ProxyServer.cpp">
+    <ClCompile Include="openRTSP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playCommon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="playCommon.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

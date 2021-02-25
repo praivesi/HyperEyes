@@ -18,9 +18,16 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="openRTSP.cpp" />
+    <ClCompile Include="playCommon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="playCommon.hh" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D72005D8-3BB8-445D-B301-D33807AA4A88}</ProjectGuid>
-    <RootNamespace>mediaServer</RootNamespace>
+    <ProjectGuid>{168D45B8-795F-4DF6-9B6E-3B8BA29B7CB9}</ProjectGuid>
+    <RootNamespace>openRTSP</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -81,13 +88,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,13 +101,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -111,15 +116,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,25 +133,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\liveMedia\include;..\groupsock\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalOptions>/verbose %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\mediaServer\DynamicRTSPServer.hh" />
-    <ClInclude Include="..\..\mediaServer\version.hh" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\mediaServer\DynamicRTSPServer.cpp" />
-    <ClCompile Include="..\..\mediaServer\live555MediaServer.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
