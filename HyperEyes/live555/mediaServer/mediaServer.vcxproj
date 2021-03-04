@@ -81,7 +81,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\liveMedia\include;$(ProjectDir)..\groupsock\include;$(ProjectDir)..\UsageEnvironment\include;$(ProjectDir)..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -95,7 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\liveMedia\include;$(ProjectDir)..\groupsock\include;$(ProjectDir)..\UsageEnvironment\include;$(ProjectDir)..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\liveMedia\include;$(ProjectDir)..\groupsock\include;$(ProjectDir)..\UsageEnvironment\include;$(ProjectDir)..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\BasicUsageEnvironment\include;$(SolutionDir)..\UsageEnvironment\include;$(SolutionDir)..\groupsock\include;$(SolutionDir)..\liveMedia\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\liveMedia\include;$(ProjectDir)..\groupsock\include;$(ProjectDir)..\UsageEnvironment\include;$(ProjectDir)..\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -141,12 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\mediaServer\DynamicRTSPServer.hh" />
-    <ClInclude Include="..\..\mediaServer\version.hh" />
+    <ClCompile Include="DynamicRTSPServer.cpp" />
+    <ClCompile Include="live555MediaServer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\mediaServer\DynamicRTSPServer.cpp" />
-    <ClCompile Include="..\..\mediaServer\live555MediaServer.cpp" />
+    <ClInclude Include="DynamicRTSPServer.hh" />
+    <ClInclude Include="version.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
