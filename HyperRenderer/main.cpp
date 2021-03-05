@@ -15,7 +15,7 @@ int main()
 	std::vector<std::string> rtspURLs;
 	rtspURLs.push_back("rtsp://admin:1234@192.168.21.203:554/video1");
 	
-	rtspManager.BeginStreaming(rtspURLs);
+	rtspManager.beginStreaming(rtspURLs);
 
 	return 0;
 }

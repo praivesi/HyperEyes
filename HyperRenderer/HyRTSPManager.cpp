@@ -2,7 +2,7 @@
 
 char eventLoopWatchVariable = 0;
 
-bool HyRTSPManager::BeginStreaming(std::vector<std::string> rtspURLs)
+bool HyRTSPManager::beginStreaming(std::vector<std::string> rtspURLs)
 {
 	// Begin by setting up our usage environment:
 	TaskScheduler* scheduler = BasicTaskScheduler::createNew();
@@ -40,7 +40,13 @@ static unsigned rtspClientCount = 0; // Counts how many streams (i.e., "RTSPClie
 void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char const* rtspURL) {
 	// Begin by creating a "RTSPClient" object.  Note that there is a separate "RTSPClient" object for each stream that we wish
 	// to receive (even if more than stream uses the same "rtsp://" URL).
-	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
+
+
+	// [210305] TODO: Need passing callback function to HyRTSPClient
+	recvFrame = recvFrameImp;
+
+
+	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, recvFrame, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
 	if (rtspClient == NULL) {
 		env << "Failed to create a RTSP client for URL \"" << rtspURL << "\": " << env.getResultMsg() << "\n";
 		return;
@@ -52,4 +58,8 @@ void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char co
 	// Note that this command - like all RTSP commands - is sent asynchronously; we do not block, waiting for a response.
 	// Instead, the following function call returns immediately, and we handle the RTSP response later, from within the event loop:
 	rtspClient->sendDescribeCommand(continueAfterDESCRIBE);
+}
+
+void HyRTSPManager::recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
+{
 }

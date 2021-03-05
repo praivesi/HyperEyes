@@ -119,7 +119,8 @@ void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultStri
 		// (This will prepare the data sink to receive data; the actual flow of data from the client won't start happening until later,
 		// after we've sent a RTSP "PLAY" command.)
 
-		scs.subsession->sink = DummySink::createNew(env, *scs.subsession, rtspClient->url());
+		scs.subsession->sink = DummySink::createNew(env, ((HyRTSPClient*)rtspClient)->sendRecvFrame,
+			*scs.subsession, rtspClient->url());
 		// perhaps use your own custom "MediaSink" subclass instead
 		if (scs.subsession->sink == NULL) {
 			env << *rtspClient << "Failed to create a data sink for the \"" << *scs.subsession
@@ -275,8 +276,10 @@ void shutdownStream(RTSPClient* rtspClient, int exitCode) {
 
 // Implementation of "HyRTSPClient":
 
-HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL,
+HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL, recvHandler* recvCallback,
 	int verbosityLevel, char const* applicationName, portNumBits tunnelOverHTTPPortNum) {
+	sendRecvFrame = recvCallback;
+
 	return new HyRTSPClient(env, rtspURL, verbosityLevel, applicationName, tunnelOverHTTPPortNum);
 }
 
@@ -306,14 +309,15 @@ StreamClientState::~StreamClientState() {
 	}
 }
 
-
 // Implementation of "DummySink":
 
 // Even though we're not going to be doing anything with the incoming data, we still need to receive it.
 // Define the size of the buffer that we'll use:
 #define DUMMY_SINK_RECEIVE_BUFFER_SIZE 100000
 
-DummySink* DummySink::createNew(UsageEnvironment& env, MediaSubsession& subsession, char const* streamId) {
+DummySink* DummySink::createNew(UsageEnvironment& env, recvHandler* recvCallback, MediaSubsession& subsession, char const* streamId) {
+	sendRecvFrame = recvCallback;
+
 	return new DummySink(env, subsession, streamId);
 }
 
@@ -356,6 +360,8 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 #endif
 	envir() << "\n";
 #endif
+
+	sendRecvFrame(frameSize, numTruncatedBytes, presentationTime);
 
 	// Then continue, to request the next frame of data:
 	continuePlaying();

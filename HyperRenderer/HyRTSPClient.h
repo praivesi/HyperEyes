@@ -39,13 +39,13 @@ void subsessionByeHandler(void* clientData, char const* reason);
 void streamTimerHandler(void* clientData);
 // called at the end of a stream's expected duration (if the stream has not already signaled its end using a RTCP "BYE")
 
-
-
 // Used to iterate through each stream's 'subsessions', setting up each one:
 void setupNextSubsession(RTSPClient* rtspClient);
 
 // Used to shut down and close a stream (including its "RTSPClient" object):
 void shutdownStream(RTSPClient* rtspClient, int exitCode = 1);
+
+typedef void (recvHandler)(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
 
 // Define a class to hold per-stream state that we maintain throughout each stream's lifetime:
 class StreamClientState {
@@ -68,7 +68,7 @@ public:
 
 class HyRTSPClient : public RTSPClient {
 public:
-	static HyRTSPClient* createNew(UsageEnvironment& env, char const* rtspURL,
+	static HyRTSPClient* createNew(UsageEnvironment& env, char const* rtspURL, recvHandler *recvCallback,
 		int verbosityLevel = 0,
 		char const* applicationName = NULL,
 		portNumBits tunnelOverHTTPPortNum = 0);
@@ -81,6 +81,8 @@ protected:
 
 public:
 	StreamClientState scs;
+
+	static recvHandler* sendRecvFrame;
 };
 
 // Define a data sink (a subclass of "MediaSink") to receive the data for each subsession (i.e., each audio or video 'substream').
@@ -90,7 +92,7 @@ public:
 
 class DummySink : public MediaSink {
 public:
-	static DummySink* createNew(UsageEnvironment& env,
+	static DummySink* createNew(UsageEnvironment& env, recvHandler* recvCallback,
 		MediaSubsession& subsession, // identifies the kind of data that's being received
 		char const* streamId = NULL); // identifies the stream itself (optional)
 
@@ -114,6 +116,8 @@ private:
 	u_int8_t* fReceiveBuffer;
 	MediaSubsession& fSubsession;
 	char* fStreamId;
+
+	static recvHandler* sendRecvFrame;
 };
 
 #define RTSP_CLIENT_VERBOSITY_LEVEL 1 // by default, print verbose output from each "RTSPClient"
