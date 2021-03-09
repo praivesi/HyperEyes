@@ -4,11 +4,12 @@
 #include "BasicUsageEnvironment.hh"
 
 #include "HyRTSPClient.h"
+#include "CommonDefines.h"
 
 #include <iostream>
 #include <vector>
 
-typedef void (recvHandler)(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
+void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
 
 class HyRTSPManager {
 public:
@@ -19,5 +20,6 @@ private:
 	void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL);
 
 	void (*recvFrame)(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
-	void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
+
+	recvHandler handler;
 };

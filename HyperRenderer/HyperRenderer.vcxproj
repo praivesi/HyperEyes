@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonDefines.h" />
     <ClInclude Include="HyRTSPClient.h" />
     <ClInclude Include="HyRTSPManager.h" />
   </ItemGroup>

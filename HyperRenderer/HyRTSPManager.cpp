@@ -41,12 +41,7 @@ void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char co
 	// Begin by creating a "RTSPClient" object.  Note that there is a separate "RTSPClient" object for each stream that we wish
 	// to receive (even if more than stream uses the same "rtsp://" URL).
 
-
-	// [210305] TODO: Need passing callback function to HyRTSPClient
-	recvFrame = recvFrameImp;
-
-
-	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, recvFrame, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
+	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, &recvFrameImp, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
 	if (rtspClient == NULL) {
 		env << "Failed to create a RTSP client for URL \"" << rtspURL << "\": " << env.getResultMsg() << "\n";
 		return;
@@ -60,6 +55,7 @@ void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char co
 	rtspClient->sendDescribeCommand(continueAfterDESCRIBE);
 }
 
-void HyRTSPManager::recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
+void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
 {
+	printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
 }

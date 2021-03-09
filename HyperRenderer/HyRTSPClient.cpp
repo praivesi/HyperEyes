@@ -119,7 +119,7 @@ void continueAfterSETUP(RTSPClient* rtspClient, int resultCode, char* resultStri
 		// (This will prepare the data sink to receive data; the actual flow of data from the client won't start happening until later,
 		// after we've sent a RTSP "PLAY" command.)
 
-		scs.subsession->sink = DummySink::createNew(env, ((HyRTSPClient*)rtspClient)->sendRecvFrame,
+		scs.subsession->sink = DummySink::createNew(env, sendRecvFrameOnClient,
 			*scs.subsession, rtspClient->url());
 		// perhaps use your own custom "MediaSink" subclass instead
 		if (scs.subsession->sink == NULL) {
@@ -276,9 +276,9 @@ void shutdownStream(RTSPClient* rtspClient, int exitCode) {
 
 // Implementation of "HyRTSPClient":
 
-HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL, recvHandler* recvCallback,
+HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL, recvHandler recvCallback,
 	int verbosityLevel, char const* applicationName, portNumBits tunnelOverHTTPPortNum) {
-	sendRecvFrame = recvCallback;
+	sendRecvFrameOnClient = recvCallback;
 
 	return new HyRTSPClient(env, rtspURL, verbosityLevel, applicationName, tunnelOverHTTPPortNum);
 }
@@ -315,8 +315,8 @@ StreamClientState::~StreamClientState() {
 // Define the size of the buffer that we'll use:
 #define DUMMY_SINK_RECEIVE_BUFFER_SIZE 100000
 
-DummySink* DummySink::createNew(UsageEnvironment& env, recvHandler* recvCallback, MediaSubsession& subsession, char const* streamId) {
-	sendRecvFrame = recvCallback;
+DummySink* DummySink::createNew(UsageEnvironment& env, recvHandler recvCallback, MediaSubsession& subsession, char const* streamId) {
+	sendRecvFrameOnSink = recvCallback;
 
 	return new DummySink(env, subsession, streamId);
 }
@@ -361,7 +361,7 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 	envir() << "\n";
 #endif
 
-	sendRecvFrame(frameSize, numTruncatedBytes, presentationTime);
+	sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
 
 	// Then continue, to request the next frame of data:
 	continuePlaying();

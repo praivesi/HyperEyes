@@ -19,6 +19,9 @@
     <Filter Include="Header Files\RTSP">
       <UniqueIdentifier>{b2588f58-d608-4d20-bcc1-8bd00b980811}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{464d6306-e560-4904-ba16-b516f09d6490}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="HyRTSPManager.h">
       <Filter>Header Files\RTSP</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDefines.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
