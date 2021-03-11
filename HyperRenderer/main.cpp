@@ -12,10 +12,14 @@ int main()
 	//AVCodec* av_codec;
 	HyRTSPManager rtspManager;
 
-	std::vector<std::string> rtspURLs;
-	rtspURLs.push_back("rtsp://admin:1234@192.168.21.203:554/video1");
+	std::string rtspURL = "rtsp://admin:1234@192.168.21.203:554/video1";
 	
-	rtspManager.beginStreaming(rtspURLs);
+	rtspManager.beginStreaming(rtspURL, &recvFrameImp);
 
 	return 0;
+}
+
+void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
+{
+	printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
 }

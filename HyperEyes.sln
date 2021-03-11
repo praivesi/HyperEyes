@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UsageEnvironment", "live555
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsAudioInputDevice", "live555\WindowsAudioInputDevice\WindowsAudioInputDevice.vcxproj", "{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testH264Streaming", "live555\testH264Streaming\testH264Streaming.vcxproj", "{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,16 @@ Global
 		{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0}.Release|x64.Build.0 = Release|x64
 		{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0}.Release|x86.ActiveCfg = Release|Win32
 		{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0}.Release|x86.Build.0 = Release|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Debug|x64.ActiveCfg = Debug|x64
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Debug|x64.Build.0 = Debug|x64
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Debug|x86.ActiveCfg = Debug|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Debug|x86.Build.0 = Debug|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Release|Any CPU.ActiveCfg = Release|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Release|x64.ActiveCfg = Release|x64
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Release|x64.Build.0 = Release|x64
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Release|x86.ActiveCfg = Release|Win32
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,5 +189,6 @@ Global
 		{F40AAE68-80AF-44CB-B595-0F137703A581} = {0C30E145-3573-4C53-BB29-649625ACFF47}
 		{FCED3B8A-ADEF-4ACE-B509-5172B91D7B32} = {0C30E145-3573-4C53-BB29-649625ACFF47}
 		{6ECD2F04-85E6-4A99-885D-3ADE4B4284A0} = {0C30E145-3573-4C53-BB29-649625ACFF47}
+		{99BA69A2-0A0A-4C80-AF8B-5DD28DA21469} = {0C30E145-3573-4C53-BB29-649625ACFF47}
 	EndGlobalSection
 EndGlobal

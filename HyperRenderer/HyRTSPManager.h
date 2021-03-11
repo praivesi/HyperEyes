@@ -13,11 +13,13 @@ void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval
 
 class HyRTSPManager {
 public:
-	bool beginStreaming(std::vector<std::string> rtspURLs);
+	//bool beginStreaming(std::vector<std::string> rtspURLs);
+	bool beginStreaming(std::string rtspURL, recvHandler recvCallback);
 
 private:
 	// The main streaming routine (for each "rtsp://" URL):
-	void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL);
+	//void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL);
+	void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, recvHandler recvCallback);
 
 	void (*recvFrame)(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
 

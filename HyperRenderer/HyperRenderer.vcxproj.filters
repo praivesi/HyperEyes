@@ -22,6 +22,12 @@
     <Filter Include="Common">
       <UniqueIdentifier>{464d6306-e560-4904-ba16-b516f09d6490}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{799fd523-5ab3-4dfb-b6f9-b057841f9a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frame">
+      <UniqueIdentifier>{396bffaa-cfaa-47f4-b4ab-ccdbbd821028}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="CommonDefines.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="HyFrame.h">
+      <Filter>Frame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

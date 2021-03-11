@@ -2,23 +2,24 @@
 
 char eventLoopWatchVariable = 0;
 
-bool HyRTSPManager::beginStreaming(std::vector<std::string> rtspURLs)
+bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback)
 {
 	// Begin by setting up our usage environment:
 	TaskScheduler* scheduler = BasicTaskScheduler::createNew();
 	UsageEnvironment* env = BasicUsageEnvironment::createNew(*scheduler);
 
-	if (rtspURLs.size() == 0)
-	{
-		*env << "There's no RTSP URL." << "\n";
-		return false;
-	}
+	//if (rtspURLs.size() == 0)
+	//{
+	//	*env << "There's no RTSP URL." << "\n";
+	//	return false;
+	//}
 
 	std::string progName = "HyRTSPClient";
-	for (std::string & rtspURL : rtspURLs)
-	{
-		openURL(*env, progName.c_str(), rtspURL.c_str());
-	}
+	//for (std::string & rtspURL : rtspURLs)
+	//{
+	//	openURL(*env, progName.c_str(), rtspURL.c_str(), recvCallback);
+	//}
+	openURL(*env, progName.c_str(), rtspURL.c_str(), recvCallback);
 
 	// All subsequent activity takes place within the event loop:
 	env->taskScheduler().doEventLoop(&eventLoopWatchVariable);
@@ -37,11 +38,12 @@ bool HyRTSPManager::beginStreaming(std::vector<std::string> rtspURLs)
 
 static unsigned rtspClientCount = 0; // Counts how many streams (i.e., "RTSPClient"s) are currently in use.
 
-void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char const* rtspURL) {
+void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, recvHandler recvCallback) {
 	// Begin by creating a "RTSPClient" object.  Note that there is a separate "RTSPClient" object for each stream that we wish
 	// to receive (even if more than stream uses the same "rtsp://" URL).
 
-	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, &recvFrameImp, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
+	//RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, &recvFrameImp, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
+	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, recvCallback, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
 	if (rtspClient == NULL) {
 		env << "Failed to create a RTSP client for URL \"" << rtspURL << "\": " << env.getResultMsg() << "\n";
 		return;
@@ -55,7 +57,7 @@ void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char co
 	rtspClient->sendDescribeCommand(continueAfterDESCRIBE);
 }
 
-void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
-{
-	printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
-}
+//void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
+//{
+//	printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
+//}
