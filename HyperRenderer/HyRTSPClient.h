@@ -22,9 +22,17 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // client application.  For a full-featured RTSP client application - with much more functionality, and many options - see
 // "openRTSP": http://www.live555.com/openRTSP/
 
+// Use FFMPEG
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
+//
+
 #include "liveMedia.hh"
 #include "BasicUsageEnvironment.hh"
 #include "CommonDefines.h"
+
+#define INBUF_SIZE 4096
 
 // Forward function definitions:
 static recvHandler sendRecvFrameOnClient;
@@ -82,6 +90,8 @@ protected:
 
 public:
 	StreamClientState scs;
+
+
 };
 
 // Define a data sink (a subclass of "MediaSink") to receive the data for each subsession (i.e., each audio or video 'substream').
@@ -113,8 +123,21 @@ private:
 
 private:
 	u_int8_t* fReceiveBuffer;
+	u_int8_t* fReceiveBufferAV;
 	MediaSubsession& fSubsession;
 	char* fStreamId;
+
+	//// FFMPEG
+	//AVCodec *codec;
+	//AVCodecContext *context;
+	//AVFrame *picture;
+	//AVPacket avpkt;
+	//int frame;
+	//int got_picture;
+	//int len;
+	//uint8_t inbuf[INBUF_SIZE + AV_INPUT_BUFFER_PADDING_SIZE];
+	//char buf[1024];
+	////
 };
 
 #define RTSP_CLIENT_VERBOSITY_LEVEL 1 // by default, print verbose output from each "RTSPClient"

@@ -326,6 +326,46 @@ DummySink::DummySink(UsageEnvironment& env, MediaSubsession& subsession, char co
 	fSubsession(subsession) {
 	fStreamId = strDup(streamId);
 	fReceiveBuffer = new u_int8_t[DUMMY_SINK_RECEIVE_BUFFER_SIZE];
+
+#pragma region Adde from demoLig555WithFFMPEG Open Source
+	//fReceiveBufferAV = new u_int8_t[DUMMY_SINK_RECEIVE_BUFFER_SIZE + 4];
+	//fReceiveBufferAV[0] = 0;
+	//fReceiveBufferAV[1] = 0;
+	//fReceiveBufferAV[2] = 0;
+	//fReceiveBufferAV[3] = 1;
+
+	//av_init_packet(&avpkt);
+	//avpkt.flags |= AV_PKT_FLAG_KEY;
+	//avpkt.pts = avpkt.dts = 0;
+
+	///* set end of buffer to 0 (this ensures that no overreading happens for damaged mpeg streams) */
+	//memset(inbuf + INBUF_SIZE, 0, AV_INPUT_BUFFER_PADDING_SIZE);
+
+	////codec = avcodec_find_decoder(CODEC_ID_MPEG1VIDEO);
+	//codec = avcodec_find_decoder(AV_CODEC_ID_H264);
+	//if (!codec) {
+	//	envir() << "codec not found!";
+	//	exit(4);
+	//}
+
+	//context = avcodec_alloc_context3(codec);
+	//picture = av_frame_alloc();
+
+	//if (codec->capabilities & AV_CODEC_CAP_TRUNCATED) {
+	//	context->flags |= AV_CODEC_FLAG_TRUNCATED; // we do not send complete frames
+	//}
+
+	//context->width = 640;
+	//context->height = 360;
+	//context->pix_fmt = AV_PIX_FMT_YUV420P;
+
+	///* for some codecs width and height MUST be initialized there because this info is not available in the bitstream */
+
+	//if (avcodec_open2(context, codec, NULL) < 0) {
+	//	envir() << "could not open codec";
+	//	exit(5);
+	//}
+#pragma endregion
 }
 
 DummySink::~DummySink() {
@@ -336,6 +376,11 @@ DummySink::~DummySink() {
 void DummySink::afterGettingFrame(void* clientData, unsigned frameSize, unsigned numTruncatedBytes,
 	struct timeval presentationTime, unsigned durationInMicroseconds) {
 	DummySink* sink = (DummySink*)clientData;
+	auto a = sink->fReceiveBuffer;
+	auto b = sink->fStreamId;
+
+	sendRecvFrameOnSink(sink->fReceiveBuffer, sink->fStreamId, frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
+
 	sink->afterGettingFrame(frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
 }
 
@@ -361,7 +406,7 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 	envir() << "\n";
 #endif
 
-	sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
+	//sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
 
 	// Then continue, to request the next frame of data:
 	continuePlaying();
