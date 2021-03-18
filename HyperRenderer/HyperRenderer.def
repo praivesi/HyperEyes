@@ -1,0 +1,6 @@
+LIBRARY "HyperRenderer"
+
+EXPORTS CreateInstance
+		Initialize
+		OnRender
+		OnResize

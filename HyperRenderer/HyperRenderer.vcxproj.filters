@@ -45,6 +45,9 @@
     <ClCompile Include="HyD2DHandler.cpp">
       <Filter>D2D</Filter>
     </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HyRTSPClient.h">
@@ -62,5 +65,10 @@
     <ClInclude Include="HyD2DHandler.h">
       <Filter>D2D</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HyperRenderer.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

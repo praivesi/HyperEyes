@@ -17,7 +17,7 @@ HyD2DHandler::HyD2DHandler(HWND hWnd)
 {
 	CoInitialize(nullptr);
 
-	m_hWnd = nullptr;
+	m_hWnd = hWnd;
 	m_pDirect2dFactory = nullptr;
 	m_pRenderTarget = nullptr;
 	m_pLightSlateGrayBrush = nullptr;
