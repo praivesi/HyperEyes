@@ -1,9 +1,12 @@
 #include <iostream>
 #include <vector>
 
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libswscale/swscale.h>
+//extern "C"
+//{
+//	#include <libavcodec/avcodec.h>
+//	#include <libavformat/avformat.h>
+//	#include <libswscale/swscale.h>
+//}
 
 #include "HyRTSPManager.h"
 
@@ -14,8 +17,8 @@ int main()
 {
 	AVFormatContext *pFormatCtx = nullptr;
 
-	if (avformat_open_input(&pFormatCtx, "test.h264", nullptr, 0) != 0) { return -1; }
-	if (avformat_find_stream_info(pFormatCtx, nullptr) < 0) { return -1; }
+	//if (avformat_open_input(&pFormatCtx, "test.h264", nullptr, 0) != 0) { return -1; }
+	//if (avformat_find_stream_info(pFormatCtx, nullptr) < 0) { return -1; }
 
 	//AVCodecContext* pCodecCtxOrig = nullptr;
 	//AVCodecContext* pCodecCtx = nullptr;
@@ -130,8 +133,8 @@ void recvFrameImp(uint8_t* pReceiveBuffer, char* pStreamId, unsigned frameSize, 
 {
 	//DummySink* sink = (DummySink*)clientData;
 
-	printf("fStreamId => %s\n", pStreamId);
-	printf("pReceivedBuffer => %s\n", pReceiveBuffer);
+	//printf("fStreamId => %s\n", pStreamId);
+	//printf("pReceivedBuffer => %s\n", pReceiveBuffer);
 
 	//printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
 }

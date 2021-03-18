@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(disable: 4996)
 
 /**********
 This library is free software; you can redistribute it and/or modify it under
@@ -23,9 +24,16 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // "openRTSP": http://www.live555.com/openRTSP/
 
 // Use FFMPEG
+extern "C" {
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
+#include <libavutil/pixdesc.h>
+#include <libavutil/hwcontext.h>
+#include <libavutil/opt.h>
+#include <libavutil/avassert.h>
+#include <libavutil/imgutils.h>
+}
 //
 
 #include "liveMedia.hh"
@@ -127,17 +135,17 @@ private:
 	MediaSubsession& fSubsession;
 	char* fStreamId;
 
-	//// FFMPEG
-	//AVCodec *codec;
-	//AVCodecContext *context;
-	//AVFrame *picture;
-	//AVPacket avpkt;
-	//int frame;
-	//int got_picture;
-	//int len;
-	//uint8_t inbuf[INBUF_SIZE + AV_INPUT_BUFFER_PADDING_SIZE];
-	//char buf[1024];
-	////
+	// FFMPEG
+	AVCodec *codec;
+	AVCodecContext *context;
+	AVFrame *picture;
+	AVPacket avpkt;
+	int frame;
+	int got_picture;
+	int len;
+	uint8_t inbuf[INBUF_SIZE + AV_INPUT_BUFFER_PADDING_SIZE];
+	char buf[1024];
+	//
 };
 
 #define RTSP_CLIENT_VERBOSITY_LEVEL 1 // by default, print verbose output from each "RTSPClient"

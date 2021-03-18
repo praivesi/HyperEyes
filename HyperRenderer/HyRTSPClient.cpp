@@ -327,44 +327,44 @@ DummySink::DummySink(UsageEnvironment& env, MediaSubsession& subsession, char co
 	fStreamId = strDup(streamId);
 	fReceiveBuffer = new u_int8_t[DUMMY_SINK_RECEIVE_BUFFER_SIZE];
 
-#pragma region Adde from demoLig555WithFFMPEG Open Source
-	//fReceiveBufferAV = new u_int8_t[DUMMY_SINK_RECEIVE_BUFFER_SIZE + 4];
-	//fReceiveBufferAV[0] = 0;
-	//fReceiveBufferAV[1] = 0;
-	//fReceiveBufferAV[2] = 0;
-	//fReceiveBufferAV[3] = 1;
+#pragma region Added from demoLig555WithFFMPEG Open Source
+	fReceiveBufferAV = new u_int8_t[DUMMY_SINK_RECEIVE_BUFFER_SIZE + 4];
+	fReceiveBufferAV[0] = 0;
+	fReceiveBufferAV[1] = 0;
+	fReceiveBufferAV[2] = 0;
+	fReceiveBufferAV[3] = 1;
 
-	//av_init_packet(&avpkt);
-	//avpkt.flags |= AV_PKT_FLAG_KEY;
-	//avpkt.pts = avpkt.dts = 0;
+	av_init_packet(&avpkt);
+	avpkt.flags |= AV_PKT_FLAG_KEY;
+	avpkt.pts = avpkt.dts = 0;
 
-	///* set end of buffer to 0 (this ensures that no overreading happens for damaged mpeg streams) */
-	//memset(inbuf + INBUF_SIZE, 0, AV_INPUT_BUFFER_PADDING_SIZE);
+	/* set end of buffer to 0 (this ensures that no overreading happens for damaged mpeg streams) */
+	memset(inbuf + INBUF_SIZE, 0, AV_INPUT_BUFFER_PADDING_SIZE);
 
-	////codec = avcodec_find_decoder(CODEC_ID_MPEG1VIDEO);
-	//codec = avcodec_find_decoder(AV_CODEC_ID_H264);
-	//if (!codec) {
-	//	envir() << "codec not found!";
-	//	exit(4);
-	//}
+	//codec = avcodec_find_decoder(CODEC_ID_MPEG1VIDEO);
+	codec = avcodec_find_decoder(AV_CODEC_ID_H264);
+	if (!codec) {
+		envir() << "codec not found!";
+		exit(4);
+	}
 
-	//context = avcodec_alloc_context3(codec);
-	//picture = av_frame_alloc();
+	context = avcodec_alloc_context3(codec);
+	picture = av_frame_alloc();
 
-	//if (codec->capabilities & AV_CODEC_CAP_TRUNCATED) {
-	//	context->flags |= AV_CODEC_FLAG_TRUNCATED; // we do not send complete frames
-	//}
+	if (codec->capabilities & AV_CODEC_CAP_TRUNCATED) {
+		context->flags |= AV_CODEC_FLAG_TRUNCATED; // we do not send complete frames
+	}
 
-	//context->width = 640;
-	//context->height = 360;
-	//context->pix_fmt = AV_PIX_FMT_YUV420P;
+	context->width = 640;
+	context->height = 360;
+	context->pix_fmt = AV_PIX_FMT_YUV420P;
 
-	///* for some codecs width and height MUST be initialized there because this info is not available in the bitstream */
+	/* for some codecs width and height MUST be initialized there because this info is not available in the bitstream */
 
-	//if (avcodec_open2(context, codec, NULL) < 0) {
-	//	envir() << "could not open codec";
-	//	exit(5);
-	//}
+	if (avcodec_open2(context, codec, NULL) < 0) {
+		envir() << "could not open codec";
+		exit(5);
+	}
 #pragma endregion
 }
 
@@ -385,7 +385,7 @@ void DummySink::afterGettingFrame(void* clientData, unsigned frameSize, unsigned
 }
 
 // If you don't want to see debugging output for each received frame, then comment out the following line:
-#define DEBUG_PRINT_EACH_RECEIVED_FRAME 1
+//#define DEBUG_PRINT_EACH_RECEIVED_FRAME
 
 void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes,
 	struct timeval presentationTime, unsigned /*durationInMicroseconds*/) {
@@ -407,6 +407,93 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 #endif
 
 	//sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
+#pragma region Added from demoLive555WithFFMPEG Open Source
+	if (strcmp(fSubsession.codecName(), "H264") == 0) {
+		avpkt.data = fReceiveBufferAV;
+		//	r2sprop();
+		//	r2sprop2();
+		//	avpkt.size = (int)fReceiveBuffer[0];
+		avpkt.size = frameSize + 4;
+		//	avpkt.size = frameSize;
+		if (avpkt.size != 0) {
+			memcpy(fReceiveBufferAV + 4, fReceiveBuffer, frameSize);
+			avpkt.data = fReceiveBufferAV; //+2;
+										   //		avpkt.data = fReceiveBuffer; //+2;
+			len = avcodec_decode_video2(context, picture, &got_picture, &avpkt);
+			if (len < 0) {
+				envir() << "Error while decoding frame" << frame;
+				//			exit(6);
+			}
+			if (got_picture) {
+
+				// do something with it
+				//SDL_LockYUVOverlay(bmp);
+
+			/*	AVPicture pict;
+				pict.data[0] = bmp->pixels[0];
+				pict.data[1] = bmp->pixels[2];
+				pict.data[2] = bmp->pixels[1];
+
+				pict.linesize[0] = bmp->pitches[0];
+				pict.linesize[1] = bmp->pitches[2];
+				pict.linesize[2] = bmp->pitches[1];*/
+
+				//struct SwsContext *sws;
+				//sws = sws_getContext(
+				//	c->width,
+				//	c->height,
+				//	PIX_FMT_YUV420P,
+				//	c->width,
+				//	c->height,
+				//	PIX_FMT_YUV420P,
+				//	SWS_BICUBIC,
+				//	NULL,
+				//	NULL,
+				//	NULL
+				//);
+				//sws_scale(
+				//	sws,
+				//	picture->data,
+				//	picture->linesize,
+				//	0,
+				//	c->height,
+				//	pict.data,
+				//	pict.linesize
+				//);
+
+
+
+				//SDL_UnlockYUVOverlay(bmp);
+
+				//rect.x = 0;
+				//rect.y = 0;
+				//rect.w = c->width;
+				//rect.h = c->height;
+				//SDL_DisplayYUVOverlay(bmp, &rect);
+
+
+				//
+				/*
+				char fname[256]={0};
+				sprintf(fname, "OriginalYUV%d.pgm",frame);
+				pgm_save (
+				picture->data[0],
+				picture->linesize[0],
+				c->width,
+				c->height,
+				fname
+				);
+				*/
+				//sws_freeContext(sws);
+				frame++;
+			}
+			else {
+				envir() << "no picture :( !\n";
+			}
+		}
+
+	}
+#pragma endregion
 
 	// Then continue, to request the next frame of data:
 	continuePlaying();

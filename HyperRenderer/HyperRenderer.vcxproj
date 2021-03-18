@@ -82,12 +82,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavcodec\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib;avformat.lib;avcodec.lib;avutil.lib;ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavutil\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)ffmpeg\libavcodec\</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,12 +97,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavcodec\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib;avformat.lib;avcodec.lib;avutil.lib;ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavutil\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)ffmpeg\libavcodec\</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,14 +114,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavcodec\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib;avformat.lib;avcodec.lib;avutil.lib;ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavutil\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)ffmpeg\libavcodec\</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,23 +133,27 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavcodec\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)live555\liveMedia\include;$(SolutionDir)live555\groupsock\include;$(SolutionDir)live555\UsageEnvironment\include;$(SolutionDir)live555\BasicUsageEnvironment\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d2d1.lib;avformat.lib;avcodec.lib;avutil.lib;ws2_32.lib;BasicUsageEnvironment.lib;UsageEnvironment.lib;groupsock.lib;liveMedia.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)ffmpeg\;$(SolutionDir)ffmpeg\libavutil\;$(SolutionDir)ffmpeg\libavformat\;$(SolutionDir)ffmpeg\libavcodec\</AdditionalLibraryDirectories>
+      <SubSystem>
+      </SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HyD2DHandler.cpp" />
     <ClCompile Include="HyRTSPClient.cpp" />
     <ClCompile Include="HyRTSPManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDefines.h" />
+    <ClInclude Include="HyD2DHandler.h" />
     <ClInclude Include="HyFrame.h" />
     <ClInclude Include="HyRTSPClient.h" />
     <ClInclude Include="HyRTSPManager.h" />

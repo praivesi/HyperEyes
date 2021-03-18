@@ -28,6 +28,9 @@
     <Filter Include="Frame">
       <UniqueIdentifier>{396bffaa-cfaa-47f4-b4ab-ccdbbd821028}</UniqueIdentifier>
     </Filter>
+    <Filter Include="D2D">
+      <UniqueIdentifier>{422afb5b-f8ce-454d-b1fe-f6dfbaa7ea2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="HyRTSPManager.cpp">
       <Filter>RTSP</Filter>
+    </ClCompile>
+    <ClCompile Include="HyD2DHandler.cpp">
+      <Filter>D2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="HyFrame.h">
       <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="HyD2DHandler.h">
+      <Filter>D2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
