@@ -155,6 +155,7 @@
     <ClCompile Include="HyRTSPClient.cpp" />
     <ClCompile Include="HyRTSPManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="HyRTSPRenderController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonDefines.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="HyFrame.h" />
     <ClInclude Include="HyRTSPClient.h" />
     <ClInclude Include="HyRTSPManager.h" />
+    <ClInclude Include="HyRTSPRenderController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HyperRenderer.def" />

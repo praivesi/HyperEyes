@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="RTSP">
-      <UniqueIdentifier>{c4773df2-fd8e-4bd1-bb0e-5d4e13d52936}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\RTSP">
       <UniqueIdentifier>{b2588f58-d608-4d20-bcc1-8bd00b980811}</UniqueIdentifier>
     </Filter>
@@ -28,8 +25,14 @@
     <Filter Include="Frame">
       <UniqueIdentifier>{396bffaa-cfaa-47f4-b4ab-ccdbbd821028}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{d97f8bba-d1cc-4512-8442-121ba3d7fb2c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="D2D">
       <UniqueIdentifier>{422afb5b-f8ce-454d-b1fe-f6dfbaa7ea2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RTSP">
+      <UniqueIdentifier>{c4773df2-fd8e-4bd1-bb0e-5d4e13d52936}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +51,9 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HyRTSPRenderController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HyRTSPClient.h">
@@ -64,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="HyD2DHandler.h">
       <Filter>D2D</Filter>
+    </ClInclude>
+    <ClInclude Include="HyRTSPRenderController.h">
+      <Filter>Source Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

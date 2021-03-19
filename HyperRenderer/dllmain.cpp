@@ -1,16 +1,19 @@
+#define WIN32_LEAN_AND_MEAN
+
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <memory>
 
-#include "HyD2DHandler.h"
-
+#include "HyRTSPRenderController.h"
 
 #define HYPER_SCREEN_API extern "C" __declspec(dllexport)
 
 using namespace std;
 
 HMODULE gMainModule = nullptr;
-unique_ptr<HyD2DHandler> d2d = nullptr;
+std::unique_ptr<HyRTSPRenderController> controller = nullptr;
+
+inline bool Guard() { return controller != nullptr; }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ulReasonForCall,
@@ -29,28 +32,30 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 
 HYPER_SCREEN_API int __stdcall CreateInstance(HWND hWnd)
 {
-	d2d = make_unique<HyD2DHandler>(hWnd);
+	controller = make_unique<HyRTSPRenderController>(hWnd);
 
-	return d2d != nullptr ? 0 : -1;
+	return controller != nullptr ? 0 : -1;
 }
 
 HYPER_SCREEN_API int __stdcall Initialize()
 {
-	HRESULT hr = d2d->Initialize();
+	if (!Guard()) return -1;
 
-	return SUCCEEDED(hr) ? 0 : -1;
+	return controller->Initialize() ? 0 : -1;
 }
 
 HYPER_SCREEN_API int __stdcall OnRender()
 {
-	HRESULT hr = d2d->OnRender();
+	if (!Guard()) return -1;
 
-	return SUCCEEDED(hr) ? 0 : -1;
+	return controller->OnRender() ? 0 : -1;
 }
 
 HYPER_SCREEN_API int __stdcall OnResize(UINT width, UINT height)
 {
-	d2d->OnResize(width, height);
+	if (!Guard()) return -1;
+
+	controller->OnResize(width, height);
 	printf("width: %u / height: %u\n", width, height);
 
 	return 0;

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "liveMedia.hh"
 #include "BasicUsageEnvironment.hh"
 
@@ -13,6 +12,8 @@ void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval
 
 class HyRTSPManager {
 public:
+	HyRTSPManager();
+	~HyRTSPManager();
 	//bool beginStreaming(std::vector<std::string> rtspURLs);
 	bool beginStreaming(std::string rtspURL, recvHandler recvCallback);
 

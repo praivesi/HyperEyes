@@ -2,6 +2,16 @@
 
 char eventLoopWatchVariable = 0;
 
+HyRTSPManager::HyRTSPManager()
+{
+
+}
+
+HyRTSPManager::~HyRTSPManager()
+{
+
+}
+
 bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback)
 {
 	// Begin by setting up our usage environment:
