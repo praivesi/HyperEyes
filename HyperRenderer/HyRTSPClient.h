@@ -39,6 +39,7 @@ extern "C" {
 #include "liveMedia.hh"
 #include "BasicUsageEnvironment.hh"
 #include "CommonDefines.h"
+#include "HyFrame.h"
 
 #define INBUF_SIZE 4096
 
@@ -137,14 +138,18 @@ private:
 
 	// FFMPEG
 	AVCodec *codec;
-	AVCodecContext *context;
+	AVCodecContext *codecContext;
 	AVFrame *picture;
+	AVFrame *frameRGB;
 	AVPacket avpkt;
+	SwsContext *convertContext;
 	int frame;
 	int got_picture;
 	int len;
 	uint8_t inbuf[INBUF_SIZE + AV_INPUT_BUFFER_PADDING_SIZE];
 	char buf[1024];
+
+	int frameCnt;
 	//
 };
 

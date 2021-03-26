@@ -1,13 +1,11 @@
 #pragma once
-
 #include <cstdint>
-#include "CommonFunctions.h"
 
 class HyFrame {
 public:
-	uint8_t * data;
-	int original_width;
-	int original_height;
+	uint8_t *data;
+	int org_width;
+	int org_height;
 	int data_size;
 	int width;
 	int height;
@@ -15,9 +13,13 @@ public:
 	int frame_id;
 	int inter_frame_delay;
 
+public:
 	HyFrame() : data(nullptr) {};
-
 	~HyFrame() {
-		SafeRelease(data);
+		if (data != nullptr)
+		{
+			delete data;
+			data = nullptr;
+		}
 	}
 };

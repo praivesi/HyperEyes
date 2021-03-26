@@ -12,6 +12,7 @@ HyRTSPManager::~HyRTSPManager()
 
 }
 
+//bool HyRTSPManager::beginStreaming(std::string rtspURL, void(*recvCallback)(HyFrame *frame) /*recvHandler recvCallback*/)
 bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback)
 {
 	// Begin by setting up our usage environment:

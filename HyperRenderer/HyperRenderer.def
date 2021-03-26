@@ -4,3 +4,4 @@ EXPORTS CreateInstance
 		Initialize
 		OnRender
 		OnResize
+		Play

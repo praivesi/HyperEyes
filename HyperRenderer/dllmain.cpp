@@ -60,3 +60,12 @@ HYPER_SCREEN_API int __stdcall OnResize(UINT width, UINT height)
 
 	return 0;
 }
+
+HYPER_SCREEN_API int __stdcall Play()
+{
+	if (!Guard()) return -1;
+	
+	controller->Play();
+
+	return 0;
+}

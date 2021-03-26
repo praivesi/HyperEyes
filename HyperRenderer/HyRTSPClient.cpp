@@ -348,24 +348,63 @@ DummySink::DummySink(UsageEnvironment& env, MediaSubsession& subsession, char co
 		exit(4);
 	}
 
-	context = avcodec_alloc_context3(codec);
+	codecContext = avcodec_alloc_context3(codec);
 	picture = av_frame_alloc();
 
+	int output_size = av_image_get_buffer_size(AV_PIX_FMT_BGR24, 640, 480, 1);
+	uint8_t* buffer = (uint8_t *)av_malloc(output_size * sizeof(uint8_t));
+
+	frameRGB = av_frame_alloc();
+	av_image_fill_arrays(frameRGB->data, frameRGB->linesize, buffer, AV_PIX_FMT_BGR24, 640, 480, 1);
+	frameRGB->format = AV_PIX_FMT_BGR24;
+	frameRGB->width = 640;
+	frameRGB->height = 480;
+
 	if (codec->capabilities & AV_CODEC_CAP_TRUNCATED) {
-		context->flags |= AV_CODEC_FLAG_TRUNCATED; // we do not send complete frames
+		codecContext->flags |= AV_CODEC_FLAG_TRUNCATED; // we do not send complete frames
 	}
 
-	context->width = 640;
-	context->height = 360;
-	context->pix_fmt = AV_PIX_FMT_YUV420P;
+	codecContext->width = 1920;
+	codecContext->height = 1080;
+	codecContext->pix_fmt = AV_PIX_FMT_YUV420P;
 
 	/* for some codecs width and height MUST be initialized there because this info is not available in the bitstream */
 
-	if (avcodec_open2(context, codec, NULL) < 0) {
+	if (avcodec_open2(codecContext, codec, NULL) < 0) {
 		envir() << "could not open codec";
 		exit(5);
 	}
-#pragma endregion
+
+	//	struct SwsContext *sws;
+	//	sws = sws_getContext(
+	//		codecContext->width,
+	//		codecContext->height,
+	//		AV_PIX_FMT_YUV420P,
+	//		codecContext->width,
+	//		codecContext->height,
+	//		AV_PIX_FMT_YUV420P,
+	//		SWS_BICUBIC,
+	//		NULL,
+	//		NULL,
+	//		NULL
+	//	);
+	//	sws_scale(
+	//		sws,
+	//		picture->data,
+	//		picture->linesize,
+	//		0,
+	//		codecContext->height,
+	//		pict.data,
+	//		pict.linesize
+	//	);
+
+	//convertContext = sws_getContext(codecContext->width, codecContext->height, codecContext->pix_fmt,
+	//	640, 480, AV_PIX_FMT_BGR24, SWS_BICUBIC, NULL, NULL, NULL);
+
+	//sws_scale(convertContext, picture->data, picture->linesize, 0, codecContext->height, frameRGB->data, frameRGB->linesize);
+	#pragma endregion
+
+	frameCnt = 0;
 }
 
 DummySink::~DummySink() {
@@ -379,7 +418,7 @@ void DummySink::afterGettingFrame(void* clientData, unsigned frameSize, unsigned
 	auto a = sink->fReceiveBuffer;
 	auto b = sink->fStreamId;
 
-	sendRecvFrameOnSink(sink->fReceiveBuffer, sink->fStreamId, frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
+	//sendRecvFrameOnSink(sink->fReceiveBuffer, sink->fStreamId, frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
 
 	sink->afterGettingFrame(frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
 }
@@ -408,6 +447,8 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 
 	//sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
 #pragma region Added from demoLive555WithFFMPEG Open Source
+	printf("CODEC_NAME : %s\n", fSubsession.codecName());
+
 	if (strcmp(fSubsession.codecName(), "H264") == 0) {
 		avpkt.data = fReceiveBufferAV;
 		//	r2sprop();
@@ -418,80 +459,134 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 		if (avpkt.size != 0) {
 			memcpy(fReceiveBufferAV + 4, fReceiveBuffer, frameSize);
 			avpkt.data = fReceiveBufferAV; //+2;
+
+
+			int result = avcodec_send_packet(codecContext, &avpkt);
+
+			char* strerr = new char[4096];
+			av_strerror(result, strerr, 4096);
+
+			printf("%s\n", strerr);
+
+			if (result < 0) 
+			{
+				continuePlaying();
+				return; 
+			}
+
+			result = avcodec_receive_frame(codecContext, picture);
+			if (result < 0) 
+			{
+				continuePlaying();
+				return; 
+			}
+
+			// set source width, height
+
+			// 640,480 - destination size
+			int byte_size = av_image_get_buffer_size(AV_PIX_FMT_BGR24, 640, 480, 1);
+
+			if (convertContext == nullptr)
+			{
+				convertContext = sws_getContext(codecContext->width, codecContext->height, codecContext->pix_fmt,
+					640, 480, AV_PIX_FMT_BGR24, SWS_BICUBIC, NULL, NULL, NULL);
+			}
+
+			sws_scale(convertContext, picture->data, picture->linesize, 0, codecContext->height, frameRGB->data, frameRGB->linesize);
+
+			HyFrame *frame = new HyFrame();
+			frame->data = new uint8_t[byte_size * sizeof(uint8_t)];
+			memset(frame->data, 0x00, byte_size * sizeof(uint8_t));
+
+			memcpy(frame->data, picture->data[0], byte_size * sizeof(uint8_t));
+
+			frame->org_width = codecContext->width;
+			frame->org_height = codecContext->height;
+			frame->data_size = byte_size * sizeof(uint8_t);
+			frame->frame_id = frameCnt++;
+			frame->width = 640;
+			frame->height = 480;
+			frame->pitch = frameRGB->linesize[0];
+			frame->inter_frame_delay = codecContext->ticks_per_frame * 1000 * codecContext->time_base.num / codecContext->time_base.den;
+
+			sendRecvFrameOnSink(frame);
+
+
 										   //		avpkt.data = fReceiveBuffer; //+2;
-			len = avcodec_decode_video2(context, picture, &got_picture, &avpkt);
-			if (len < 0) {
-				envir() << "Error while decoding frame" << frame;
-				//			exit(6);
-			}
-			if (got_picture) {
+			//len = avcodec_decode_video2(codecContext, picture, &got_picture, &avpkt);
+			//if (len < 0) {
+			//	envir() << "Error while decoding frame" << frame;
+			//	//			exit(6);
+			//}
+			//if (got_picture) {
 
-				// do something with it
-				//SDL_LockYUVOverlay(bmp);
+			//	// do something with it
+			//	//SDL_LockYUVOverlay(bmp);
 
-			/*	AVPicture pict;
-				pict.data[0] = bmp->pixels[0];
-				pict.data[1] = bmp->pixels[2];
-				pict.data[2] = bmp->pixels[1];
+			//	/*AVPicture pict;
+			//	pict.data[0] = bmp->pixels[0];
+			//	pict.data[1] = bmp->pixels[2];
+			//	pict.data[2] = bmp->pixels[1];
 
-				pict.linesize[0] = bmp->pitches[0];
-				pict.linesize[1] = bmp->pitches[2];
-				pict.linesize[2] = bmp->pitches[1];*/
+			//	pict.linesize[0] = bmp->pitches[0];
+			//	pict.linesize[1] = bmp->pitches[2];
+			//	pict.linesize[2] = bmp->pitches[1];*/
 
-				//struct SwsContext *sws;
-				//sws = sws_getContext(
-				//	c->width,
-				//	c->height,
-				//	PIX_FMT_YUV420P,
-				//	c->width,
-				//	c->height,
-				//	PIX_FMT_YUV420P,
-				//	SWS_BICUBIC,
-				//	NULL,
-				//	NULL,
-				//	NULL
-				//);
-				//sws_scale(
-				//	sws,
-				//	picture->data,
-				//	picture->linesize,
-				//	0,
-				//	c->height,
-				//	pict.data,
-				//	pict.linesize
-				//);
+			//	AVFrame frameRGB
 
-
-
-				//SDL_UnlockYUVOverlay(bmp);
-
-				//rect.x = 0;
-				//rect.y = 0;
-				//rect.w = c->width;
-				//rect.h = c->height;
-				//SDL_DisplayYUVOverlay(bmp, &rect);
+			//	struct SwsContext *sws;
+			//	sws = sws_getContext(
+			//		codecContext->width,
+			//		codecContext->height,
+			//		AV_PIX_FMT_YUV420P,
+			//		codecContext->width,
+			//		codecContext->height,
+			//		AV_PIX_FMT_YUV420P,
+			//		SWS_BICUBIC,
+			//		NULL,
+			//		NULL,
+			//		NULL
+			//	);
+			//	sws_scale(
+			//		sws,
+			//		picture->data,
+			//		picture->linesize,
+			//		0,
+			//		codecContext->height,
+			//		pict.data,
+			//		pict.linesize
+			//	);
 
 
-				//
-				/*
-				char fname[256]={0};
-				sprintf(fname, "OriginalYUV%d.pgm",frame);
-				pgm_save (
-				picture->data[0],
-				picture->linesize[0],
-				c->width,
-				c->height,
-				fname
-				);
-				*/
-				//sws_freeContext(sws);
-				frame++;
-			}
-			else {
-				envir() << "no picture :( !\n";
-			}
+
+			//	//SDL_UnlockYUVOverlay(bmp);
+
+			//	//rect.x = 0;
+			//	//rect.y = 0;
+			//	//rect.w = c->width;
+			//	//rect.h = c->height;
+			//	//SDL_DisplayYUVOverlay(bmp, &rect);
+
+
+			//	//
+			//	/*
+			//	char fname[256]={0};
+			//	sprintf(fname, "OriginalYUV%d.pgm",frame);
+			//	pgm_save (
+			//	picture->data[0],
+			//	picture->linesize[0],
+			//	c->width,
+			//	c->height,
+			//	fname
+			//	);
+			//	*/
+			//	//sws_freeContext(sws);
+			//	frame++;
+			//}
+			//else {
+			//	envir() << "no picture :( !\n";
+			//}
 		}
-
 	}
 #pragma endregion
 

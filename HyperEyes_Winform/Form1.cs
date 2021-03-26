@@ -30,7 +30,8 @@ namespace KoreanEyes_Winform
         {
             CreateInstance(this.tmpPanel.Handle);
             Initialize();
-            OnRender();
+            //OnRender();
+            Play();
         }
 
         [DllImport("HyperRenderer.dll")]
@@ -44,5 +45,8 @@ namespace KoreanEyes_Winform
 
         [DllImport("HyperRenderer.dll")]
         public static extern int OnResize(uint width, uint height);
+
+        [DllImport("HyperRenderer.dll")]
+        public static extern int Play();
     }
 }

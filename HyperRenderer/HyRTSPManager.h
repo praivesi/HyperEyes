@@ -16,6 +16,7 @@ public:
 	~HyRTSPManager();
 	//bool beginStreaming(std::vector<std::string> rtspURLs);
 	bool beginStreaming(std::string rtspURL, recvHandler recvCallback);
+	//bool beginStreaming(std::string rtspURL, void(*recvCallback)(HyFrame *frame) /*recvHandler recvCallback*/)
 
 private:
 	// The main streaming routine (for each "rtsp://" URL):

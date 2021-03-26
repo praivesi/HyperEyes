@@ -19,9 +19,11 @@ HyD2DHandler::HyD2DHandler(HWND hWnd)
 
 	m_hWnd = hWnd;
 	m_pDirect2dFactory = nullptr;
+	m_pWicImgFactory = nullptr;
 	m_pRenderTarget = nullptr;
 	m_pLightSlateGrayBrush = nullptr;
 	m_pLinearGradientBrush = nullptr;
+	m_pRenderBitmap = nullptr;
 }
 
 HyD2DHandler::~HyD2DHandler(void)
@@ -50,7 +52,7 @@ void HyD2DHandler::OnResize(UINT width, UINT height)
 	}
 }
 
-HRESULT HyD2DHandler::OnRender()
+HRESULT HyD2DHandler::OnRender(HyFrame *frame)
 {
 	HRESULT hr = S_OK;
 
@@ -62,34 +64,73 @@ HRESULT HyD2DHandler::OnRender()
 		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 		D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
-		// Draw a grid background.
-		int width = static_cast<int>(rtSize.width);
-		int height = static_cast<int>(rtSize.height);
 
-		// Draw two rectangles.
-		D2D1_RECT_F rectangle1 = D2D1::RectF(
-			rtSize.width / 2 - 50.0f,
-			rtSize.height / 2 - 50.0f,
-			rtSize.width / 2 + 50.0f,
-			rtSize.height / 2 + 50.0f
-		);
+		IWICBitmap* embedded_bitmap = nullptr;
+		IWICFormatConverter* converter = nullptr;
 
-		D2D1_RECT_F rectangle2 = D2D1::RectF(
-			rtSize.width / 2 - 100.0f,
-			rtSize.height / 2 - 100.0f,
-			rtSize.width / 2 + 100.0f,
-			rtSize.height / 2 + 100.0f
-		);
+		hr = m_pWicImgFactory->CreateBitmapFromMemory(
+			frame->width,
+			frame->height,
+			GUID_WICPixelFormat24bppBGR,
+			frame->pitch,
+			frame->data_size,
+			frame->data,
+			&embedded_bitmap);
 
-		// Draw the outline of a rectangle.
-		m_pRenderTarget->FillRectangle(&rectangle2, m_pLinearGradientBrush);
+		if (SUCCEEDED(hr)) {
+			hr = m_pWicImgFactory->CreateFormatConverter(&converter);
+		}
 
-		// Draw a filled rectangle.
-		m_pRenderTarget->FillRectangle(&rectangle1, m_pLightSlateGrayBrush);
+		if (SUCCEEDED(hr)) {
+			hr = converter->Initialize(
+				embedded_bitmap,
+				GUID_WICPixelFormat24bppBGR,
+				WICBitmapDitherTypeNone,
+				nullptr,
+				0.f,
+				WICBitmapPaletteTypeCustom
+			);
+		}
+
+		if (SUCCEEDED(hr)) {
+			SafeRelease(&m_pRenderBitmap);
+			hr = m_pRenderTarget->CreateBitmapFromWicBitmap(converter, nullptr, &m_pRenderBitmap);
+		}
+
+		if (SUCCEEDED(hr)) {
+			D2D1_RECT_F render_rect = D2D1::RectF(0, 0, m_pRenderTarget->GetSize().width, m_pRenderTarget->GetSize().height);
+
+			m_pRenderTarget->DrawBitmap(m_pRenderBitmap, render_rect, 1.0, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR);
+		}
+
+		//// Draw a grid background.
+		//int width = static_cast<int>(rtSize.width);
+		//int height = static_cast<int>(rtSize.height);
+
+		//// Draw two rectangles.
+		//D2D1_RECT_F rectangle1 = D2D1::RectF(
+		//	rtSize.width / 2 - 50.0f,
+		//	rtSize.height / 2 - 50.0f,
+		//	rtSize.width / 2 + 50.0f,
+		//	rtSize.height / 2 + 50.0f
+		//);
+
+		//D2D1_RECT_F rectangle2 = D2D1::RectF(
+		//	rtSize.width / 2 - 100.0f,
+		//	rtSize.height / 2 - 100.0f,
+		//	rtSize.width / 2 + 100.0f,
+		//	rtSize.height / 2 + 100.0f
+		//);
+
+		//// Draw the outline of a rectangle.
+		//m_pRenderTarget->FillRectangle(&rectangle2, m_pLinearGradientBrush);
+
+		//// Draw a filled rectangle.
+		//m_pRenderTarget->FillRectangle(&rectangle1, m_pLightSlateGrayBrush);
 
 		hr = m_pRenderTarget->EndDraw();
-
 	}
+
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
 		hr = S_OK;
@@ -160,6 +201,18 @@ HRESULT HyD2DHandler::CreateDeviceResources()
 			);
 		}
 
+		if (m_pWicImgFactory == nullptr) {
+			hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
+			if (SUCCEEDED(hr)) {
+				hr = CoCreateInstance(
+					CLSID_WICImagingFactory,
+					NULL,
+					CLSCTX_INPROC_SERVER,
+					IID_PPV_ARGS(&m_pWicImgFactory)
+				);
+			}
+		}
 	}
 
 	return hr;

@@ -1,5 +1,7 @@
 #pragma once
+//#include <functional>
 #include "stdint.h"
+#include "HyFrame.h"
 
-typedef void(*recvHandler)(uint8_t* pReceiveBuffer, char* pStreamId, unsigned frameSize, unsigned numTruncatedBytes,
-	struct timeval presentationTime, unsigned durationInMicroseconds);
+typedef void(*recvHandler)(HyFrame* recvFrame);
+//std::function<void(HyFrame*)> recvHandler;

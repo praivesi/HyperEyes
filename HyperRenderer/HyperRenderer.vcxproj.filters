@@ -22,9 +22,6 @@
     <Filter Include="Rendering">
       <UniqueIdentifier>{799fd523-5ab3-4dfb-b6f9-b057841f9a04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Frame">
-      <UniqueIdentifier>{396bffaa-cfaa-47f4-b4ab-ccdbbd821028}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Controller">
       <UniqueIdentifier>{d97f8bba-d1cc-4512-8442-121ba3d7fb2c}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="RTSP">
       <UniqueIdentifier>{c4773df2-fd8e-4bd1-bb0e-5d4e13d52936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Frame">
+      <UniqueIdentifier>{ec70eec0-4aff-4e31-91c2-36bdb31733f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,14 +65,14 @@
     <ClInclude Include="CommonDefines.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="HyFrame.h">
-      <Filter>Frame</Filter>
-    </ClInclude>
     <ClInclude Include="HyD2DHandler.h">
       <Filter>D2D</Filter>
     </ClInclude>
     <ClInclude Include="HyRTSPRenderController.h">
       <Filter>Source Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="HyFrame.h">
+      <Filter>Source Files\Frame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
