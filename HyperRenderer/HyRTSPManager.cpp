@@ -12,8 +12,7 @@ HyRTSPManager::~HyRTSPManager()
 
 }
 
-//bool HyRTSPManager::beginStreaming(std::string rtspURL, void(*recvCallback)(HyFrame *frame) /*recvHandler recvCallback*/)
-bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback)
+bool HyRTSPManager::beginStreaming(std::string rtspURL, std::function<void(HyFrame*)> recvCallback)
 {
 	// Begin by setting up our usage environment:
 	TaskScheduler* scheduler = BasicTaskScheduler::createNew();
@@ -30,6 +29,7 @@ bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback
 	//{
 	//	openURL(*env, progName.c_str(), rtspURL.c_str(), recvCallback);
 	//}
+
 	openURL(*env, progName.c_str(), rtspURL.c_str(), recvCallback);
 
 	// All subsequent activity takes place within the event loop:
@@ -49,11 +49,10 @@ bool HyRTSPManager::beginStreaming(std::string rtspURL, recvHandler recvCallback
 
 static unsigned rtspClientCount = 0; // Counts how many streams (i.e., "RTSPClient"s) are currently in use.
 
-void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, recvHandler recvCallback) {
+void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, std::function<void(HyFrame*)> recvCallback) {
 	// Begin by creating a "RTSPClient" object.  Note that there is a separate "RTSPClient" object for each stream that we wish
 	// to receive (even if more than stream uses the same "rtsp://" URL).
 
-	//RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, &recvFrameImp, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
 	RTSPClient* rtspClient = HyRTSPClient::createNew(env, rtspURL, recvCallback, RTSP_CLIENT_VERBOSITY_LEVEL, progName);
 	if (rtspClient == NULL) {
 		env << "Failed to create a RTSP client for URL \"" << rtspURL << "\": " << env.getResultMsg() << "\n";
@@ -67,8 +66,3 @@ void HyRTSPManager::openURL(UsageEnvironment& env, char const* progName, char co
 	// Instead, the following function call returns immediately, and we handle the RTSP response later, from within the event loop:
 	rtspClient->sendDescribeCommand(continueAfterDESCRIBE);
 }
-
-//void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime)
-//{
-//	printf("RECIEVED FRAME BY ME : %u, %u\n", frameSize, numTruncatedBytes);
-//}

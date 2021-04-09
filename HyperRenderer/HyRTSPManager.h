@@ -7,23 +7,17 @@
 
 #include <iostream>
 #include <vector>
-
-void recvFrameImp(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
+#include <functional>
 
 class HyRTSPManager {
 public:
 	HyRTSPManager();
 	~HyRTSPManager();
-	//bool beginStreaming(std::vector<std::string> rtspURLs);
-	bool beginStreaming(std::string rtspURL, recvHandler recvCallback);
-	//bool beginStreaming(std::string rtspURL, void(*recvCallback)(HyFrame *frame) /*recvHandler recvCallback*/)
+	bool beginStreaming(std::string rtspURL, std::function<void(HyFrame*)> funcPtr);
 
 private:
 	// The main streaming routine (for each "rtsp://" URL):
-	//void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL);
-	void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, recvHandler recvCallback);
+	void openURL(UsageEnvironment& env, char const* progName, char const* rtspURL, std::function<void(HyFrame*)> recvCallback);
 
 	void (*recvFrame)(unsigned frameSize, unsigned numTruncatedBytes, struct timeval presentationTime);
-
-	recvHandler handler;
 };

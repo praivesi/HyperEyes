@@ -276,9 +276,10 @@ void shutdownStream(RTSPClient* rtspClient, int exitCode) {
 
 // Implementation of "HyRTSPClient":
 
-HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL, recvHandler recvCallback,
+HyRTSPClient* HyRTSPClient::createNew(UsageEnvironment& env, char const* rtspURL, std::function<void(HyFrame*)> recvCallback,
 	int verbosityLevel, char const* applicationName, portNumBits tunnelOverHTTPPortNum) {
 	sendRecvFrameOnClient = recvCallback;
+
 
 	return new HyRTSPClient(env, rtspURL, verbosityLevel, applicationName, tunnelOverHTTPPortNum);
 }
@@ -315,7 +316,7 @@ StreamClientState::~StreamClientState() {
 // Define the size of the buffer that we'll use:
 #define DUMMY_SINK_RECEIVE_BUFFER_SIZE 100000
 
-DummySink* DummySink::createNew(UsageEnvironment& env, recvHandler recvCallback, MediaSubsession& subsession, char const* streamId) {
+DummySink* DummySink::createNew(UsageEnvironment& env, std::function<void(HyFrame*)> recvCallback, MediaSubsession& subsession, char const* streamId) {
 	sendRecvFrameOnSink = recvCallback;
 
 	return new DummySink(env, subsession, streamId);
@@ -415,10 +416,6 @@ DummySink::~DummySink() {
 void DummySink::afterGettingFrame(void* clientData, unsigned frameSize, unsigned numTruncatedBytes,
 	struct timeval presentationTime, unsigned durationInMicroseconds) {
 	DummySink* sink = (DummySink*)clientData;
-	auto a = sink->fReceiveBuffer;
-	auto b = sink->fStreamId;
-
-	//sendRecvFrameOnSink(sink->fReceiveBuffer, sink->fStreamId, frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
 
 	sink->afterGettingFrame(frameSize, numTruncatedBytes, presentationTime, durationInMicroseconds);
 }
@@ -445,7 +442,6 @@ void DummySink::afterGettingFrame(unsigned frameSize, unsigned numTruncatedBytes
 	envir() << "\n";
 #endif
 
-	//sendRecvFrameOnSink(frameSize, numTruncatedBytes, presentationTime);
 #pragma region Added from demoLive555WithFFMPEG Open Source
 	printf("CODEC_NAME : %s\n", fSubsession.codecName());
 

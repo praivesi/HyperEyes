@@ -36,6 +36,8 @@ extern "C" {
 }
 //
 
+#include <functional>
+
 #include "liveMedia.hh"
 #include "BasicUsageEnvironment.hh"
 #include "CommonDefines.h"
@@ -44,8 +46,12 @@ extern "C" {
 #define INBUF_SIZE 4096
 
 // Forward function definitions:
-static recvHandler sendRecvFrameOnClient;
-static recvHandler sendRecvFrameOnSink;
+//static recvHandler sendRecvFrameOnClient;
+//static recvHandler sendRecvFrameOnSink;
+
+static std::function<void(HyFrame*)> sendRecvFrameOnClient;
+static std::function<void(HyFrame*)> sendRecvFrameOnSink;
+
 
 // RTSP 'response handlers':
 void continueAfterDESCRIBE(RTSPClient* rtspClient, int resultCode, char* resultString);
@@ -86,7 +92,8 @@ public:
 
 class HyRTSPClient : public RTSPClient {
 public:
-	static HyRTSPClient* createNew(UsageEnvironment& env, char const* rtspURL, recvHandler recvCallback,
+
+	static HyRTSPClient* createNew(UsageEnvironment& env, char const* rtspURL, std::function<void(HyFrame*)> recvCallback,
 		int verbosityLevel = 0,
 		char const* applicationName = NULL,
 		portNumBits tunnelOverHTTPPortNum = 0);
@@ -110,7 +117,7 @@ public:
 
 class DummySink : public MediaSink {
 public:
-	static DummySink* createNew(UsageEnvironment& env, recvHandler recvCallback,
+	static DummySink* createNew(UsageEnvironment& env, std::function<void(HyFrame*)> recvCallback,
 		MediaSubsession& subsession, // identifies the kind of data that's being received
 		char const* streamId = NULL); // identifies the stream itself (optional)
 
